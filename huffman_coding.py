@@ -25,6 +25,10 @@ class Nohuffman:
 #simbolos: lista de símbolos (caracteres)
 #probabilidades: lista de probabilidades associadas a cada símbolo
 def codificacao_huffman(simbolos,probabilidades):
+    
+    #Valida se a lista não esta vazia e se os tamanhos são iguais
+    if not simbolos or not probabilidades or len(simbolos) != len(probabilidades):
+        return None  #Entrada inválida
     #fila de prioridade (heapq)
     heap_fila = []
     #para garantir que o heap nunca precise comparar dois objetos
@@ -37,6 +41,14 @@ def codificacao_huffman(simbolos,probabilidades):
         Nohuff.init_no(i, proba)
         heapq.heappush(heap_fila, (Nohuff.frequencia,cont, Nohuff))
         cont+=1
+        
+    # Caso especial: só 1 símbolo no texto
+    if len(heap_fila) == 1:
+        _, _, unico = heap_fila[0]
+        raiz = Nohuffman()
+        raiz.init_no(None, unico.frequencia)
+        raiz.esquerda = unico
+        return raiz
     
     #Constrói a árvore de Huffman
     while len(heap_fila) > 1:
@@ -62,13 +74,18 @@ def gerar_codigos_huffman(nohuff, prefixo="", codigos=None):
     #Inicializa o dicionário de códigos, se necessário
     if codigos is None:
         codigos = {}
+        
+    #Verifica se a árvore está vazia
+    if nohuff is None:
+        print("Árvore de Huffman vazia!")
+        return codigos
     
     #Percorre a árvore de forma recursiva
     if nohuff is not None:
         
         #Se o nó é uma folha, atribui o código binário ao símbolo
         if nohuff.simbolo is not None:
-            codigos[nohuff.simbolo] = prefixo
+            codigos[nohuff.simbolo] = prefixo or "0"  #se só tiver um símbolo, atribui "0"
         #esquerda é 0 e direita é 1
         #esquerda é 0 porque é o nó com menor frequência
         if nohuff.esquerda:
@@ -80,9 +97,19 @@ def gerar_codigos_huffman(nohuff, prefixo="", codigos=None):
     return codigos
 
 def codificacao_huffman_texto(texto):
+    #Se o texto for vazio, retorna vazio
+    if not texto:
+        print("Texto vazio para codificação Huffman!\n")
+        #retorna dicionário vazio e string vazia
+        return {}, ""
+    
     #Calcula a frequência de cada caractere no texto
     freq = Counter(texto)
     total = sum(freq.values())
+    #Se o total for 0, retorna vazio
+    if total == 0:
+        print("Texto vazio para codificação Huffman!\n")
+        return {}, ""
 
     #Obtém os símbolos e suas probabilidades
     simbolos = list(freq.keys())
@@ -90,11 +117,24 @@ def codificacao_huffman_texto(texto):
 
     #Constrói a árvore de Huffman e gera os códigos binários
     raiz = codificacao_huffman(simbolos, probabilidades)
+    #Se a raiz for None, retorna vazio
+    if raiz is None:
+        print("Erro ao construir a árvore de Huffman!\n")
+        return {}, ""
+    
     codigos = gerar_codigos_huffman(raiz)
+    if not codigos:
+        print("Erro ao gerar os códigos de Huffman!\n")
+        return {}, ""
     
     #Codifica o texto usando os códigos gerados
     codigo_binario_por_caractere = []
     for caractere in texto:
+        #Se o caractere não estiver nos códigos, retorna vazio
+        #repr -> representação do caractere, para caracteres especiais
+        if caractere not in codigos:
+            print(f"Caractere '{repr(caractere)}' não encontrado nos códigos de Huffman!\n")
+            return {}, ""
         codigo_binario_por_caractere.append(codigos[caractere])
     
     #join é um método de string que concatena uma lista de strings em uma única string
@@ -103,7 +143,7 @@ def codificacao_huffman_texto(texto):
     # Printa os resultados
     print("\nCódigos de Huffman para cada caractere:")
     for s in codigos:
-        print(f"'{s}': {codigos[s]}")
+        print(f"{repr(s)}: {codigos[s]}") #repr para mostrar caracteres especiais
 
     print("\nTexto codificado em binário:")
     print(texto_codificado)
@@ -113,6 +153,6 @@ def codificacao_huffman_texto(texto):
 
 
 #Para tester, depois pode remover
-if __name__ == "__main__":
-    texto = input("Digite um texto para codificação Huffman: ")
-    codigos, texto_codificado = codificacao_huffman_texto(texto)
+#if __name__ == "__main__":
+   # texto = input("Digite um texto para codificação Huffman: ")
+    #codigos, texto_codificado = codificacao_huffman_texto(texto)

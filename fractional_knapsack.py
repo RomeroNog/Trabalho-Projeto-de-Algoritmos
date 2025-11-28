@@ -37,7 +37,7 @@ def mochila_fracionária(items, capacidade):
             valor_total += valor * fracao
             itens_tomados.append((indice, fracao))  #Tomou uma fração do item
             capacidade = 0  #Mochila cheia
-
+    print("\n\n--- Resultado da Mochila Fracionária ---")
     print(f"Capacidade da mochila: {capacidade_ini}")
     print(f"Valor total obtido: {valor_total:.2f}")
     print("Itens tomados (índice, fração):")
@@ -47,9 +47,9 @@ def mochila_fracionária(items, capacidade):
         
     return valor_total, itens_tomados
 #Para tester, depois pode remover
-if __name__ == "__main__":
+#if __name__ == "__main__":
     
-    items = [(80, 10), (100, 20), (120, 30)]
-    capacidade = 100
-    valor_total, itens_tomados = mochila_fracionária(items, capacidade)
+    #items = [(80, 10), (100, 20), (120, 30)]
+    #capacidade = 100
+    #valor_total, itens_tomados = mochila_fracionária(items, capacidade)
     
