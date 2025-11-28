@@ -39,8 +39,8 @@ def mochila(capacidade, valores, pesos):
 
     # Retorna o valor máximo que pode ser obtido
     return dp[n][capacidade]
+'''
 
-# Para testar, depois pode remover
 if __name__ == "__main__":
     # Recebe a capacidade da mochila
     capacidade = int(input("Digite a capacidade da mochila: "))
@@ -62,6 +62,9 @@ if __name__ == "__main__":
     # Calcula e exibe o resultado
     resultado = mochila(capacidade, valores, pesos)
     print(f"\nValor máximo que pode ser obtido: {resultado}")
+
+'''
+# Para testar, depois pode remover
     
     ####def mochila(capacidade, valores, pesos):
     #n = len(pesos)

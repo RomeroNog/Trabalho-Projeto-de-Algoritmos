@@ -8,18 +8,20 @@ INT_MAX = 999999999
 
 def main():
     while True:
-        print("\n========= MENU DE PROBLEMAS =========")
+        print("\n" + "="*50)
+        print("MENU DE PROBLEMAS ALGORÍTMICOS".center(50))
+        print("="*50)
         print("1. Problema de Atribuição (Assignment Problem)")
         print("2. Codificação de Huffman")
         print("3. Mochila Fracionária")
         print("4. Problema da Mochila (Knapsack)")
         print("5. Subsequência Comum Mais Longa (LCS)")
         print("6. Sair")
-        print("======================================")
-        
+        print("="*50)
         escolha = input("Digite o número correspondente ao problema: ")
         
         if escolha == '1':
+            print("\nPROBLEMA DE ATRIBUIÇÃO")
             matrix = ler_matriz()
 
             while not validacao_matriz(matrix):
@@ -32,6 +34,7 @@ def main():
             
             
         elif escolha == '2':
+            print("\nCODIFICAÇÃO DE HUFFMAN")
             while True:
                 texto = input("\nDigite o texto a ser codificado: ").strip()
                 if texto == "":
@@ -42,22 +45,51 @@ def main():
             codigos, codificado = hc.codificacao_huffman_texto(texto)
 
         elif escolha == '3':
-            capacidade, items = verificacao_fk()
+            print("\nMOCHILA FRACIONÁRIA")
+            capacidade, items = verificacao_mochila()
             valor_total, itens_tomados = fk.mochila_fracionária(items, capacidade)
-            print(f"\nValor máximo obtido: {valor_total}")
-            print(f"Itens tomados: {itens_tomados}")
-            
+
             
         elif escolha == '4':
-            kp.run_knapsack_problem()
+            print("\nPROBLEMA DA MOCHILA (0/1)")
+            capacidade, itens = verificacao_mochila()
+            valores = []
+            pesos = []
+            for v,p in itens:
+                valores.append(v)
+                pesos.append(p)
+            # Calcula e exibe o resultado
+            resultado = kp.mochila(capacidade, valores,pesos)
+            print(f"\nValor máximo que pode ser obtido: {resultado}")
+            
+            
         elif escolha == '5':
-            lcs.run_longest_common_subsequence()
+            print("\nSUBSEQUÊNCIA COMUM MAIS LONGA (LCS)")
+            while True:
+                S1 = input("Digite a primeira sequência: ").strip()
+                S2 = input("Digite a segunda sequência: ").strip()
+                
+                if not S1 or not S2:
+                    print("Nenhuma das sequencias podem ser vazias!\n")
+                    continue
+                if not isinstance(S1,str) or not isinstance(S2,str):
+                    print("As sequencias devem ser strings!\n")
+                else:
+                    break
+            resultado = lcs.lcs(S1, S2)
+            print(f"Tamanho da LCS: {resultado}")
+            
+            
         elif escolha == '6':
             print("Saindo!\n")
             break
+        
+        
         else:
             print("Escolha inválida! Tente novamente.\n")
             continue
+        
+        
         continuar = input("Deseja resolver outro problema? (s/n): ")
         if continuar.lower() != 's':
             break
@@ -107,8 +139,9 @@ def validacao_numero(input_str):
             return False
         
         valores.append(num)
+        
+    return valores 
 
-    return valores  
 def validacao_matriz(matriz):
     
     # Matriz vazia
@@ -141,7 +174,6 @@ def validacao_matriz(matriz):
 
     return True
 
-
 def ler_inteiro_positivo(msg, maximo=INT_MAX):
     while True:
         entrada = input(msg).strip()
@@ -156,7 +188,7 @@ def ler_inteiro_positivo(msg, maximo=INT_MAX):
 
         return valor
            
-def verificacao_fk():
+def verificacao_mochila():
     # Ler capacidade
     capacidade = ler_inteiro_positivo("\nDigite a capacidade máxima da mochila: ")
 
@@ -173,9 +205,7 @@ def verificacao_fk():
 
     return capacidade, itens
            
-            
-            
-            
-            
+           
+                 
 if __name__ == "__main__":
     main()
