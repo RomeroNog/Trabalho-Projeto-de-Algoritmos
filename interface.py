@@ -11,21 +11,21 @@ def main():
         print("\n" + "="*50)
         print("MENU DE PROBLEMAS ALGORÍTMICOS".center(50))
         print("="*50)
-        print("1. Problema de Atribuição (Assignment Problem)")
+        print("1. Problema de Atribuiçao (Assignment Problem)")
         print("2. Codificação de Huffman")
-        print("3. Mochila Fracionária")
+        print("3. Mochila Fracionaria")
         print("4. Problema da Mochila (Knapsack)")
-        print("5. Subsequência Comum Mais Longa (LCS)")
+        print("5. Subsequencia Comum Mais Longa (LCS)")
         print("6. Sair")
         print("="*50)
-        escolha = input("Digite o número correspondente ao problema: ")
+        escolha = input("Digite o numero correspondente ao problema: ")
         
         if escolha == '1':
-            print("\nPROBLEMA DE ATRIBUIÇÃO")
+            print("\nPROBLEMA DE ATRIBUIÇAO")
             matrix = ler_matriz()
 
             while not validacao_matriz(matrix):
-                print("A matriz digitada é inválida! Digite novamente.\n")
+                print("A matriz digitada é invalida! Digite novamente.\n")
                 matrix = ler_matriz()
             
             custo, solucao = ap.associacao_tarefas(matrix)
@@ -45,7 +45,7 @@ def main():
             codigos, codificado = hc.codificacao_huffman_texto(texto)
 
         elif escolha == '3':
-            print("\nMOCHILA FRACIONÁRIA")
+            print("\nMOCHILA FRACIONARIA")
             capacidade, items = verificacao_mochila()
             valor_total, itens_tomados = fk.mochila_fracionária(items, capacidade)
 
@@ -64,10 +64,10 @@ def main():
             
             
         elif escolha == '5':
-            print("\nSUBSEQUÊNCIA COMUM MAIS LONGA (LCS)")
+            print("\nSUBSEQUENCIA COMUM MAIS LONGA (LCS)")
             while True:
-                S1 = input("Digite a primeira sequência: ").strip()
-                S2 = input("Digite a segunda sequência: ").strip()
+                S1 = input("Digite a primeira sequencia: ").strip()
+                S2 = input("Digite a segunda sequencia: ").strip()
                 
                 if not S1 or not S2:
                     print("Nenhuma das sequencias podem ser vazias!\n")
@@ -86,7 +86,7 @@ def main():
         
         
         else:
-            print("Escolha inválida! Tente novamente.\n")
+            print("Escolha invalida! Tente novamente.\n")
             continue
         
         
